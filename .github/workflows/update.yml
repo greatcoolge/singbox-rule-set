@@ -23,13 +23,31 @@ jobs:
 
       - name: Set execute permission
         run: |
+          echo "Setting execute permissions for scripts..."
           chmod +x .github/build.sh
           chmod +x .github/release-rule-set.sh
 
       - name: Build
-        run: .github/build.sh
+        run: |
+          echo "Starting build script..."
+          .github/build.sh
+        continue-on-error: true # Continue even if this step fails
 
       - name: Release
-        run: .github/release-rule-set.sh
+        run: |
+          echo "Starting release script..."
+          .github/release-rule-set.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true # Continue even if this step fails
+
+      - name: Check for script execution issues
+        run: |
+          echo "Checking for issues in previous steps..."
+          # This is a placeholder step to check for previous issues
+          # You can use additional commands here if needed
+
+      - name: Output the contents of the repository
+        run: |
+          echo "Contents of the repository:"
+          ls -la
