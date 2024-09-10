@@ -21,6 +21,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set execute permission
+        run: |
+          chmod +x .github/build.sh
+          chmod +x .github/release-rule-set.sh
+
       - name: Build
         run: .github/build.sh
 
